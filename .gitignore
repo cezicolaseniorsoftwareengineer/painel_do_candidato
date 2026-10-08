@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+votos_Bueno/*.zip
+votos_Bueno/bweb_*.csv
+votos_Bueno/perfil_eleitor_secao_*.zip
+votos_Bueno/registros_completos/*.tmp

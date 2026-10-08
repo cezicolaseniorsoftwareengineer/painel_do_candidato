@@ -1,0 +1,197 @@
+=============================================================================================================
+PROCESSANDO ANDRÉ BUENO - 2022
+==============================================================================================================
+Arquivo: bweb_1t_SP_051020221321.zip
+CSV utilizado: bweb_1t_SP_051020221321.csv
+2,000,000 linhas | 1,959 registros | 3,783 votos | 0.3 min
+4,000,000 linhas | 4,133 registros | 9,824 votos | 0.6 min
+6,000,000 linhas | 5,898 registros | 14,125 votos | 1.0 min
+8,000,000 linhas | 8,352 registros | 23,008 votos | 1.3 min
+10,000,000 linhas | 10,577 registros | 26,409 votos | 1.6 min
+12,000,000 linhas | 12,937 registros | 30,748 votos | 2.0 min
+14,000,000 linhas | 15,886 registros | 37,186 votos | 2.4 min
+16,000,000 linhas | 19,220 registros | 48,066 votos | 2.8 min
+18,000,000 linhas | 22,133 registros | 59,081 votos | 3.1 min
+
+ANDRÉ BUENO 2022: 61,953 votos
+Registros encontrados: 23,779
+Zonas existentes mapeadas: 780
+
+==============================================================================================================
+PROCESSANDO ANDRÉ BUENO - 2026
+==============================================================================================================
+Arquivo: bweb_1t_SP_051020261403.csv
+CSV utilizado: bweb_1t_SP_051020261403.csv
+2,000,000 linhas | 2,531 registros | 5,161 votos | 0.4 min
+4,000,000 linhas | 4,807 registros | 9,706 votos | 0.8 min
+6,000,000 linhas | 6,541 registros | 14,070 votos | 1.1 min
+8,000,000 linhas | 8,761 registros | 19,693 votos | 1.4 min
+10,000,000 linhas | 13,406 registros | 30,712 votos | 1.7 min
+12,000,000 linhas | 17,743 registros | 40,103 votos | 2.0 min
+14,000,000 linhas | 21,729 registros | 48,956 votos | 2.5 min
+16,000,000 linhas | 28,287 registros | 63,369 votos | 2.8 min
+
+ANDRÉ BUENO 2026: 71,664 votos
+Registros encontrados: 31,987
+Zonas existentes mapeadas: 780
+
+==============================================================================================================
+ANDRÉ BUENO - COMPARAÇÃO 2022 x 2026
+==============================================================================================================
+2022: 61,953 votos | 23,779 registros
+2026: 71,664 votos | 31,987 registros
+DIFERENÇA TOTAL: +9,711 votos
+
+==============================================================================================================
+RANKING POR REGIÃO - LADO A LADO
+==============================================================================================================
+Interior                 | RANK 2022   1 |   20,021 | RANK 2026   1 |   25,074 | DIF   +5,053 | CRESCIMENTO
+Grande SP                | RANK 2022   2 |   17,366 | RANK 2026   2 |   17,053 | DIF     -313 | REDUCAO
+Norte                    | RANK 2022   3 |   14,403 | RANK 2026   3 |   13,948 | DIF     -455 | REDUCAO
+Leste                    | RANK 2022   4 |    4,207 | RANK 2026   4 |    7,118 | DIF   +2,911 | CRESCIMENTO
+Litoral                  | RANK 2022   5 |    3,647 | RANK 2026   5 |    4,735 | DIF   +1,088 | CRESCIMENTO
+Sul                      | RANK 2022   6 |    1,549 | RANK 2026   6 |    2,609 | DIF   +1,060 | CRESCIMENTO
+Oeste                    | RANK 2022   7 |      676 | RANK 2026   7 |      752 | DIF      +76 | CRESCIMENTO
+Centro                   | RANK 2022   8 |       84 | RANK 2026   8 |      375 | DIF     +291 | CRESCIMENTO
+Capital - não classificada | RANK 2022     |        0 | RANK 2026     |        0 | DIF       +0 | SEM VOTOS
+
+==============================================================================================================
+TOP 30 MUNICÍPIOS - LADO A LADO
+==============================================================================================================
+ 1º | SAO PAULO                      | 2022  20,919 | 2026  24,802 | DIF  +3,883 | CRESCIMENTO
+ 2º | FRANCO DA ROCHA                | 2022   2,826 | 2026   2,738 | DIF     -88 | REDUCAO
+ 3º | CAIEIRAS                       | 2022   2,111 | 2026   2,392 | DIF    +281 | CRESCIMENTO
+ 4º | MAUA                           | 2022     692 | 2026   2,239 | DIF  +1,547 | CRESCIMENTO
+ 5º | CUBATAO                        | 2022   2,340 | 2026   1,931 | DIF    -409 | REDUCAO
+ 6º | FRANCISCO MORATO               | 2022   3,783 | 2026   1,734 | DIF  -2,049 | REDUCAO
+ 7º | JUNDIAI                        | 2022   2,120 | 2026   1,294 | DIF    -826 | REDUCAO
+ 8º | BRAGANCA PAULISTA              | 2022     768 | 2026   1,230 | DIF    +462 | CRESCIMENTO
+ 9º | CAMPO LIMPO PAULISTA           | 2022   1,721 | 2026   1,227 | DIF    -494 | REDUCAO
+10º | RIBEIRAO PRETO                 | 2022     224 | 2026   1,179 | DIF    +955 | CRESCIMENTO
+11º | SAO BERNARDO DO CAMPO          | 2022     742 | 2026     879 | DIF    +137 | CRESCIMENTO
+12º | SANTOS                         | 2022     112 | 2026     875 | DIF    +763 | CRESCIMENTO
+13º | SERTAOZINHO                    | 2022      12 | 2026     763 | DIF    +751 | CRESCIMENTO
+14º | OSASCO                         | 2022   1,300 | 2026     720 | DIF    -580 | REDUCAO
+15º | TAUBATE                        | 2022   1,068 | 2026     673 | DIF    -395 | REDUCAO
+16º | ITAPEVI                        | 2022     665 | 2026     601 | DIF     -64 | REDUCAO
+17º | CACAPAVA                       | 2022     507 | 2026     584 | DIF     +77 | CRESCIMENTO
+18º | CABREUVA                       | 2022     467 | 2026     578 | DIF    +111 | CRESCIMENTO
+19º | CAMPINAS                       | 2022     288 | 2026     577 | DIF    +289 | CRESCIMENTO
+20º | SANTANA DE PARNAIBA            | 2022     442 | 2026     562 | DIF    +120 | CRESCIMENTO
+21º | ITATIBA                        | 2022     133 | 2026     551 | DIF    +418 | CRESCIMENTO
+22º | UBATUBA                        | 2022     261 | 2026     550 | DIF    +289 | CRESCIMENTO
+23º | CAJAMAR                        | 2022     923 | 2026     536 | DIF    -387 | REDUCAO
+24º | BAURU                          | 2022     134 | 2026     535 | DIF    +401 | CRESCIMENTO
+25º | MAIRIPORA                      | 2022     666 | 2026     533 | DIF    -133 | REDUCAO
+26º | CATANDUVA                      | 2022     139 | 2026     532 | DIF    +393 | CRESCIMENTO
+27º | SAO JOSE DO RIO PRETO          | 2022     102 | 2026     483 | DIF    +381 | CRESCIMENTO
+28º | CAMPOS DO JORDAO               | 2022     586 | 2026     465 | DIF    -121 | REDUCAO
+29º | JAU                            | 2022      96 | 2026     447 | DIF    +351 | CRESCIMENTO
+30º | SANTO ANDRE                    | 2022     250 | 2026     440 | DIF    +190 | CRESCIMENTO
+
+==============================================================================================================
+TOP 50 ZONAS - LADO A LADO
+==============================================================================================================
+ 1º | ZE 389 | Perus                        | Norte        | 2022  6,220 | 2026  4,219 | DIF -2,001 | REDUCAO
+ 2º | ZE 192 | FRANCO DA ROCHA              | Grande SP    | 2022  2,826 | 2026  2,738 | DIF    -88 | REDUCAO
+ 3º | ZE 376 | Brasilândia                  | Norte        | 2022  2,874 | 2026  2,716 | DIF   -158 | REDUCAO
+ 4º | ZE 192 | CAIEIRAS                     | Grande SP    | 2022  2,111 | 2026  2,392 | DIF   +281 | CRESCIMENTO
+ 5º | ZE 403 | Jaraguá                      | Norte        | 2022  1,467 | 2026  1,974 | DIF   +507 | CRESCIMENTO
+ 6º | ZE 119 | CUBATAO                      | Litoral      | 2022  2,340 | 2026  1,931 | DIF   -409 | REDUCAO
+ 7º | ZE 367 | FRANCISCO MORATO             | Grande SP    | 2022  3,783 | 2026  1,734 | DIF -2,049 | REDUCAO
+ 8º | ZE 344 | CAMPO LIMPO PAULISTA         | Interior     | 2022  1,721 | 2026  1,227 | DIF   -494 | REDUCAO
+ 9º | ZE 365 | MAUA                         | Grande SP    | 2022    404 | 2026  1,187 | DIF   +783 | CRESCIMENTO
+10º | ZE 255 | Casa Verde                   | Norte        | 2022  1,053 | 2026  1,082 | DIF    +29 | CRESCIMENTO
+11º | ZE 422 | Lauzane Paulista             | Norte        | 2022    683 | 2026  1,023 | DIF   +340 | CRESCIMENTO
+12º | ZE 347 | Vila Matilde                 | Leste        | 2022    176 | 2026    892 | DIF   +716 | CRESCIMENTO
+13º | ZE  27 | BRAGANCA PAULISTA            | Interior     | 2022    535 | 2026    862 | DIF   +327 | CRESCIMENTO
+14º | ZE 327 | Nossa Senhora do Ó           | Norte        | 2022    511 | 2026    829 | DIF   +318 | CRESCIMENTO
+15º | ZE 375 | São Mateus                   | Leste        | 2022    826 | 2026    781 | DIF    -45 | REDUCAO
+16º | ZE 135 | SERTAOZINHO                  | Interior     | 2022     12 | 2026    763 | DIF   +751 | CRESCIMENTO
+17º | ZE 339 | MAUA                         | Grande SP    | 2022    173 | 2026    692 | DIF   +519 | CRESCIMENTO
+18º | ZE 281 | JUNDIAI                      | Interior     | 2022  1,026 | 2026    653 | DIF   -373 | REDUCAO
+19º | ZE 404 | Cidade Tiradentes            | Leste        | 2022    341 | 2026    638 | DIF   +297 | CRESCIMENTO
+20º | ZE 359 | ITAPEVI                      | Grande SP    | 2022    665 | 2026    601 | DIF    -64 | REDUCAO
+21º | ZE  29 | CACAPAVA                     | Interior     | 2022    507 | 2026    584 | DIF    +77 | CRESCIMENTO
+22º | ZE  59 | CABREUVA                     | Interior     | 2022    467 | 2026    578 | DIF   +111 | CRESCIMENTO
+23º | ZE 428 | SANTANA DE PARNAIBA          | Grande SP    | 2022      0 | 2026    562 | DIF   +562 | NOVOS VOTOS
+24º | ZE 352 | Itaim Paulista               | Leste        | 2022    277 | 2026    561 | DIF   +284 | CRESCIMENTO
+25º | ZE  58 | ITATIBA                      | Interior     | 2022    133 | 2026    551 | DIF   +418 | CRESCIMENTO
+26º | ZE 144 | UBATUBA                      | Litoral      | 2022    261 | 2026    550 | DIF   +289 | CRESCIMENTO
+27º | ZE 354 | CAJAMAR                      | Grande SP    | 2022    923 | 2026    536 | DIF   -387 | REDUCAO
+28º | ZE 237 | MAIRIPORA                    | Grande SP    | 2022    666 | 2026    533 | DIF   -133 | REDUCAO
+29º | ZE  40 | CATANDUVA                    | Interior     | 2022    139 | 2026    532 | DIF   +393 | CRESCIMENTO
+30º | ZE 325 | Pirituba                     | Norte        | 2022    424 | 2026    502 | DIF    +78 | CRESCIMENTO
+31º | ZE 118 | SANTOS                       | Litoral      | 2022     45 | 2026    499 | DIF   +454 | CRESCIMENTO
+32º | ZE  35 | CAMPOS DO JORDAO             | Interior     | 2022    586 | 2026    465 | DIF   -121 | REDUCAO
+33º | ZE  63 | JAU                          | Interior     | 2022     96 | 2026    447 | DIF   +351 | CRESCIMENTO
+34º | ZE 421 | Teotônio Vilela              | Leste        | 2022    212 | 2026    444 | DIF   +232 | CRESCIMENTO
+35º | ZE 417 | Parque do Carmo              | Leste        | 2022    155 | 2026    430 | DIF   +275 | CRESCIMENTO
+36º | ZE 420 | Vila Sabrina                 | Norte        | 2022    424 | 2026    424 | DIF     +0 | MANTEVE
+37º | ZE 265 | RIBEIRAO PRETO               | Interior     | 2022     77 | 2026    423 | DIF   +346 | CRESCIMENTO
+38º | ZE 135 | PONTAL                       | Interior     | 2022      1 | 2026    420 | DIF   +419 | CRESCIMENTO
+39º | ZE 361 | HORTOLANDIA                  | Interior     | 2022    448 | 2026    412 | DIF    -36 | REDUCAO
+40º | ZE 407 | TAUBATE                      | Interior     | 2022    690 | 2026    411 | DIF   -279 | REDUCAO
+41º | ZE 242 | VARZEA PAULISTA              | Interior     | 2022    529 | 2026    411 | DIF   -118 | REDUCAO
+42º | ZE 358 | MONTE MOR                    | Interior     | 2022    429 | 2026    394 | DIF    -35 | REDUCAO
+43º | ZE 142 | TIETE                        | Interior     | 2022     22 | 2026    392 | DIF   +370 | CRESCIMENTO
+44º | ZE 256 | Tucuruvi                     | Norte        | 2022    209 | 2026    384 | DIF   +175 | CRESCIMENTO
+45º | ZE 298 | BRAGANCA PAULISTA            | Interior     | 2022    233 | 2026    368 | DIF   +135 | CRESCIMENTO
+46º | ZE 217 | MAUA                         | Grande SP    | 2022    115 | 2026    360 | DIF   +245 | CRESCIMENTO
+47º | ZE 183 | RIBEIRAO PIRES               | Grande SP    | 2022    266 | 2026    346 | DIF    +80 | CRESCIMENTO
+48º | ZE 266 | RIBEIRAO PRETO               | Interior     | 2022     72 | 2026    337 | DIF   +265 | CRESCIMENTO
+49º | ZE 397 | Jardim Helena                | Leste        | 2022    131 | 2026    336 | DIF   +205 | CRESCIMENTO
+50º | ZE  65 | JUNDIAI                      | Interior     | 2022    582 | 2026    323 | DIF   -259 | REDUCAO
+
+==============================================================================================================
+MAIORES AUMENTOS DE VOTOS POR ZONA
+==============================================================================================================
+ZE 365 | MAUA                         |    404 ->  1,187 |   +783
+ZE 135 | SERTAOZINHO                  |     12 ->    763 |   +751
+ZE 347 | Vila Matilde                 |    176 ->    892 |   +716
+ZE 428 | SANTANA DE PARNAIBA          |      0 ->    562 |   +562
+ZE 339 | MAUA                         |    173 ->    692 |   +519
+ZE 403 | Jaraguá                      |  1,467 ->  1,974 |   +507
+ZE 118 | SANTOS                       |     45 ->    499 |   +454
+ZE 135 | PONTAL                       |      1 ->    420 |   +419
+ZE  58 | ITATIBA                      |    133 ->    551 |   +418
+ZE  40 | CATANDUVA                    |    139 ->    532 |   +393
+ZE 142 | TIETE                        |     22 ->    392 |   +370
+ZE  63 | JAU                          |     96 ->    447 |   +351
+ZE 265 | RIBEIRAO PRETO               |     77 ->    423 |   +346
+ZE 422 | Lauzane Paulista             |    683 ->  1,023 |   +340
+ZE  27 | BRAGANCA PAULISTA            |    535 ->    862 |   +327
+
+==============================================================================================================
+MAIORES REDUÇÕES DE VOTOS POR ZONA
+==============================================================================================================
+ZE 367 | FRANCISCO MORATO             |  3,783 ->  1,734 | -2,049
+ZE 389 | Perus                        |  6,220 ->  4,219 | -2,001
+ZE  67 | LINS                         |  1,354 ->     69 | -1,285
+ZE 344 | CAMPO LIMPO PAULISTA         |  1,721 ->  1,227 |   -494
+ZE 386 | SANTANA DE PARNAIBA          |    442 ->      0 |   -442
+ZE 103 | PROMISSAO                    |    722 ->    300 |   -422
+ZE 119 | CUBATAO                      |  2,340 ->  1,931 |   -409
+ZE 354 | CAJAMAR                      |    923 ->    536 |   -387
+ZE 281 | JUNDIAI                      |  1,026 ->    653 |   -373
+ZE 214 | BURITAMA                     |    363 ->      8 |   -355
+ZE 407 | TAUBATE                      |    690 ->    411 |   -279
+ZE  65 | JUNDIAI                      |    582 ->    323 |   -259
+ZE 297 | GUAICARA                     |    249 ->      5 |   -244
+ZE  90 | PINDAMONHANGABA              |    370 ->    129 |   -241
+ZE 424 | JUNDIAI                      |    512 ->    318 |   -194
+
+Zonas com mesma quantidade de votos: 19
+Zonas sem votos nos dois anos: 110
+
+==============================================================================================================
+AUDITORIA FINAL
+==============================================================================================================
+2022: total=61,953 | zonas=61,953 | municipios=61,953 | regioes=61,953 | dif=0
+OK - 100% classificados.
+2026: total=71,664 | zonas=71,664 | municipios=71,664 | regioes=71,664 | dif=0
+OK - 100% classificados.
+
+CHECAGEM EXPLÍCITA GUAIANASES / ZE 353
+2022: 190 votos
+2026: 290 votos

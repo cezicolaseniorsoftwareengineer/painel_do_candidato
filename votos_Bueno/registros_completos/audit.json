@@ -1,0 +1,32 @@
+{
+  "2022": {
+    "andre_bueno": {
+      "records": 23779,
+      "votes": 61953,
+      "columns": 45,
+      "file": "andre_bueno_2022_registros_completos.csv"
+    }
+  },
+  "2024": {
+    "sandra_santana": {
+      "records": 7123,
+      "votes": 38326,
+      "columns": 45,
+      "file": "sandra_santana_2024_registros_completos.csv"
+    }
+  },
+  "2026": {
+    "andre_bueno": {
+      "records": 31987,
+      "votes": 71664,
+      "columns": 45,
+      "file": "andre_bueno_2026_registros_completos.csv"
+    },
+    "sandra_santana": {
+      "records": 11846,
+      "votes": 44406,
+      "columns": 45,
+      "file": "sandra_santana_2026_registros_completos.csv"
+    }
+  }
+}
