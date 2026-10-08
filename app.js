@@ -113,8 +113,8 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
 }());
 (function addChartScrollControls(){
   if(typeof document==='undefined')return;
-  const chart=document.querySelector('#chart'),tabs=chart?.closest('.card')?.querySelector('.tabs');if(!chart||!tabs||tabs.querySelector('.chart-scroll'))return;
-  const controls=document.createElement('span');controls.className='chart-scroll';controls.innerHTML='<button type="button" aria-label="Rolar gráfico para a esquerda">‹</button><button type="button" aria-label="Rolar gráfico para a direita">›</button>';tabs.appendChild(controls);
+  const chart=document.querySelector('#chart'),tabs=chart?.closest('.card')?.querySelector('.tabs'),head=chart?.closest('.card')?.querySelector('.head');if(!chart||!tabs||!head||head.querySelector('.chart-scroll'))return;
+  const controls=document.createElement('span');controls.className='chart-scroll';controls.innerHTML='<button type="button" aria-label="Rolar gráfico para a esquerda">‹</button><button type="button" aria-label="Rolar gráfico para a direita">›</button>';head.appendChild(controls);
   controls.children[0].onclick=()=>chart.scrollBy({left:-Math.max(180,chart.clientWidth*.7),behavior:'smooth'});controls.children[1].onclick=()=>chart.scrollBy({left:Math.max(180,chart.clientWidth*.7),behavior:'smooth'});
 }());
 (function addSessionLogout(){
