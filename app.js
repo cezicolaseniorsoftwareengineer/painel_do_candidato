@@ -95,3 +95,19 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   document.querySelector('#exportComparison').onclick=()=>{const x=window.__comparisonSelection;if(!x?.left||!x?.right)return;const line=(label,row)=>`${label};${row.municipality};${row.place};${row.region};ZE ${row.zone};${row.votes[x.years[0]]};${row.votes[x.years[1]]};${row.difference}`;download('comparacao_eleitoral.csv',['Tipo;Municipio;Referencia;Regiao;Zona;Votos inicial;Votos atual;Variacao',line('A',x.left),line('B',x.right)].join('\r\n'),'text/csv;charset=utf-8')};
   document.querySelector('#printQuery').onclick=()=>window.print();
 }());
+(function addCampaignImprovement(){
+  if(typeof document==='undefined')return;
+  const territory=document.querySelector('#territories'),head=territory?.querySelector('.head');
+  if(!head||document.querySelector('#campaignImprove'))return;
+  const button=document.createElement('button');button.id='campaignImprove';button.type='button';button.className='search-action';button.textContent='Aperfeiçoar Campanha';head.appendChild(button);
+  const panel=document.createElement('div');panel.className='opportunity-panel';panel.hidden=true;panel.innerHTML='<div class="opportunity-head"><div><p class="eyebrow">INTELIGÊNCIA TERRITORIAL</p><h3>Oportunidades de expansão</h3></div><button type="button" class="opportunity-close">Fechar</button></div><p class="coverage">A análise usa os dados eleitorais carregados. População e eleitorado oficial serão preenchidos quando as bases IBGE/TSE forem adicionadas.</p><div class="opportunity-summary"></div><div class="opportunity-list"></div>';territory.appendChild(panel);
+  button.onclick=()=>{const c=window.__exportCandidate,rows=window.__exportRows||[];if(!c)return;const year=String(c.years[1]),groups={};rows.forEach(x=>{const key=x.municipality;groups[key]??={municipality:key,region:x.region,votes:0,places:0};groups[key].votes+=x.votes[year]||0;groups[key].places++});const ranked=Object.values(groups).sort((a,b)=>a.votes-b.votes),zero=ranked.filter(x=>x.votes===0).length;panel.querySelector('.opportunity-summary').innerHTML=`<strong>${zero.toLocaleString('pt-BR')}</strong> municípios sem votos no recorte · <strong>${ranked.length.toLocaleString('pt-BR')}</strong> municípios avaliados`;panel.querySelector('.opportunity-list').innerHTML=ranked.slice(0,12).map((x,i)=>`<div class="opportunity-row"><b>${i+1}</b><span><strong>${x.municipality}</strong><small>${x.region} · ${x.places} zonas analisadas</small></span><em>${x.votes.toLocaleString('pt-BR')} votos<br><small>população: pendente</small></em></div>`).join('');panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'nearest'})};panel.querySelector('.opportunity-close').onclick=()=>{panel.hidden=true};
+}());
+(function improveMobileMenu(){
+  if(typeof document==='undefined')return;
+  const aside=document.querySelector('aside'),menu=document.querySelector('#menuButton');if(!aside||!menu)return;
+  const close=document.createElement('button');close.type='button';close.className='menu-close';close.setAttribute('aria-label','Fechar menu');close.textContent='×';aside.insertBefore(close,aside.firstChild);
+  const closeMenu=()=>{document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false');};
+  close.onclick=closeMenu;aside.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',closeMenu));
+  document.addEventListener('click',event=>{if(document.body.classList.contains('menu-open')&&!aside.contains(event.target)&&event.target!==menu)closeMenu()});
+}());
