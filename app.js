@@ -111,3 +111,13 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   close.onclick=closeMenu;aside.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',closeMenu));
   document.addEventListener('click',event=>{if(document.body.classList.contains('menu-open')&&!aside.contains(event.target)&&event.target!==menu)closeMenu()});
 }());
+(function addSessionLogout(){
+  if(typeof document==='undefined')return;
+  const header=document.querySelector('header');if(!header||document.querySelector('#logoutButton'))return;
+  const button=document.createElement('button');button.id='logoutButton';button.type='button';button.className='logout-action';button.textContent='Logout';button.setAttribute('aria-label','Sair do painel');header.appendChild(button);
+  button.onclick=()=>{sessionStorage.removeItem('candidate_access');window.location.reload()};
+}());
+(function lockViewport(){
+  if(typeof document==='undefined')return;
+  let meta=document.querySelector('meta[name="viewport"]');if(!meta){meta=document.createElement('meta');meta.name='viewport';document.head.appendChild(meta)}meta.content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover';
+}());
