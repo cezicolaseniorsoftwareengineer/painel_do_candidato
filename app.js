@@ -41,6 +41,27 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   uploadPanel.querySelector('.upload-input').onchange=async function(event){const file=event.target.files[0];if(!file)return;const text=await file.text(),firstLine=text.split(/\r?\n/,1)[0];if(forbidden.test(firstLine)){result.textContent='Arquivo rejeitado: contém campo pessoal não permitido.';result.className='upload-result invalid';return}const headers=firstLine.split(/[;,]/).map(function(x){return x.trim().toLowerCase()}),required=['candidate','year','municipality','region','zone','place','votes'],missing=required.filter(function(x){return !headers.includes(x)});if(missing.length){result.textContent='Arquivo rejeitado. Campos ausentes: '+missing.join(', ')+'.';result.className='upload-result invalid';return}const rows=Math.max(0,text.trim().split(/\r?\n/).length-1);localStorage.setItem('last_upload_metadata',JSON.stringify({name:file.name,rows:rows,uploadedAt:new Date().toISOString(),status:'staged'}));result.textContent='Arquivo validado e colocado em quarentena: '+rows.toLocaleString('pt-BR')+' linhas. A base oficial não foi alterada.';result.className='upload-result valid'};
   if(sessionStorage.getItem('candidate_access')){const key=sessionStorage.getItem('candidate_access');const selector=document.querySelector('#candidateFilter');selector.value=key;selector.disabled=true;overlay.remove();document.body.classList.remove('access-locked')}
 }());
+/* Enforce candidate-scoped visibility for private campaign panels. */
+(function enforceCandidateScope(){
+  if(typeof document==='undefined')return;
+  function applyScope(key){
+    if(!key)return;
+    const selector=document.querySelector('#candidateFilter');
+    if(selector){selector.value=key;selector.disabled=true;selector.closest('label')?.setAttribute('hidden','');}
+    document.querySelectorAll('#raw-data .downloads a').forEach(function(link){
+      const href=link.getAttribute('href')||'';
+      const owner=href.includes('andre_bueno_')?'andre':href.includes('sandra_santana_')?'sandra':null;
+      if(owner===null||owner===key)link.hidden=owner!==key?false:link.hidden;
+      else link.hidden=true;
+    });
+    document.querySelectorAll('#raw-data .downloads a[href*="audit"]').forEach(function(link){link.hidden=true;});
+    const heading=document.querySelector('#raw-data h2');
+    if(heading)heading.textContent=key==='andre'?'Base bruta da campanha de André Bueno':'Base bruta da campanha de Sandra Santana';
+  }
+  applyScope(sessionStorage.getItem('candidate_access'));
+  const scopeTimer=setInterval(function(){const key=sessionStorage.getItem('candidate_access');if(key){applyScope(key);clearInterval(scopeTimer);}},250);
+  window.addEventListener('candidate-scope-ready',function(event){applyScope(event.detail);});
+}());
 /* Explicit search action: the button re-runs the cross-filter query on demand. */
 (function addSearchAction(){
   if(typeof document==='undefined')return;
