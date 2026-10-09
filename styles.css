@@ -23,3 +23,20 @@ footer{align-items:center;text-align:center}footer b,footer span{display:block;w
 .view-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:10px}.view-actions button{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--blue);font-size:9px;font-weight:800;cursor:pointer}.view-actions button:hover{border-color:var(--blue);background:#edf6ff}.view-actions span{color:var(--muted);font-size:9px}
 .access-credit{margin:18px 0 0!important;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)!important;font-size:9px!important;font-weight:600;line-height:1.6!important;text-align:center}
 .access-field{display:grid;gap:7px;margin:0 0 18px;color:var(--ink);font-size:11px;font-weight:800}.access-field input{height:48px;padding:0 13px;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-size:16px}.access-field input:focus{border-color:var(--blue);outline:3px solid #00539b22}
+.candidate-profile-gate{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:auto;padding:24px;background:rgba(5,43,93,.94)}
+.candidate-profile{position:relative;width:min(1100px,100%);max-height:calc(100vh - 48px);overflow:auto;padding:34px;border-radius:24px;background:#fff;color:#12345a;box-shadow:0 24px 80px rgba(0,0,0,.24)}
+.candidate-profile h1{margin:.2rem 0;font-size:clamp(1.8rem,4vw,2.8rem)}
+.candidate-profile h2{margin:28px 0 12px;font-size:1.2rem}
+.candidate-profile .profile-logout{float:right;border:0;border-radius:9px;padding:10px 16px;background:#07579a;color:#fff;font-weight:700;cursor:pointer}
+.profile-swot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.profile-swot article{padding:16px;border:1px solid #d8e3ef;border-radius:13px;background:#f8fbff}
+.profile-swot h3{margin:0 0 8px;color:#07579a;font-size:1rem}
+.profile-swot p{margin:0;line-height:1.5}
+.profile-table-wrap{overflow:auto;border:1px solid #d8e3ef;border-radius:12px}
+.candidate-profile table{width:100%;border-collapse:collapse;white-space:nowrap}
+.candidate-profile th,.candidate-profile td{padding:11px 13px;border-bottom:1px solid #e6edf5;text-align:left}
+.candidate-profile th{background:#f2f6fb;color:#274c70;font-size:.82rem}
+.profile-source{display:block;margin-top:18px;color:#60758c;line-height:1.5}
+.candidate-choice{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #d6e2ef;border-radius:10px;background:#f8fbff;color:#12345a;text-align:left;cursor:pointer}
+.access-card #candidateChoices{max-height:32vh;overflow:auto}
+@media(max-width:640px){.candidate-profile-gate{padding:10px}.candidate-profile{max-height:calc(100vh - 20px);padding:20px;border-radius:17px}.profile-swot{grid-template-columns:1fr}.candidate-profile th,.candidate-profile td{padding:9px;font-size:.82rem}}
