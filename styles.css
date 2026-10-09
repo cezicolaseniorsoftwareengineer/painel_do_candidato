@@ -39,4 +39,5 @@ footer{align-items:center;text-align:center}footer b,footer span{display:block;w
 .profile-source{display:block;margin-top:18px;color:#60758c;line-height:1.5}
 .candidate-choice{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #d6e2ef;border-radius:10px;background:#f8fbff;color:#12345a;text-align:left;cursor:pointer}
 .access-card #candidateChoices{max-height:32vh;overflow:auto}
+.campaign-download{display:grid;gap:6px;padding:14px;border:1px solid var(--line);border-radius:10px;background:#f8fbfd;color:var(--ink);font-size:11px}.campaign-download span{color:var(--muted)}.campaign-download strong{color:var(--blue)}
 @media(max-width:640px){.candidate-profile-gate{padding:10px}.candidate-profile{max-height:calc(100vh - 20px);padding:20px;border-radius:17px}.profile-swot{grid-template-columns:1fr}.candidate-profile th,.candidate-profile td{padding:9px;font-size:.82rem}}

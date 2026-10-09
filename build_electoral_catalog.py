@@ -7,6 +7,7 @@ does not need to download the complete statewide registry during login.
 from __future__ import annotations
 
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -36,6 +37,12 @@ def person_id(full_name: str, birth_date: str) -> str:
     # Only the irreversible identifier is published; birth date and CPF never leave the build.
     identity = f"{normalized(full_name)}|{birth_date.strip()}"
     return hashlib.sha256(identity.encode("utf-8")).hexdigest()[:24]
+
+
+def name_shard(value: str) -> str:
+    """Return a stable shard for exact, accent-insensitive candidate-name lookup."""
+    key = normalized(value).replace(" ", "")
+    return (key[:2] or "__").ljust(2, "_")
 
 
 def read_candidate_rows():
@@ -113,6 +120,7 @@ def build() -> None:
     valid_keys: set[str] = set()
     candidacy_refs: list[tuple[str, dict, str]] = []
     year_counts: dict[int, int] = defaultdict(int)
+    office_counts: dict[tuple[int, str], int] = defaultdict(int)
 
     for year, row in read_candidate_rows():
         pid = person_id(row["NM_CANDIDATO"], row["DT_NASCIMENTO"])
@@ -142,6 +150,7 @@ def build() -> None:
         candidacy_refs.append((pid, candidacy, key))
         person["candidacies"].append(candidacy)
         year_counts[year] += 1
+        office_counts[(year, normalized(row["DS_CARGO"]))] += 1
 
     by_zone, totals = load_votes(valid_keys)
     for _, candidacy, key in candidacy_refs:
@@ -162,24 +171,51 @@ def build() -> None:
         for prefix in prefixes:
             shards[prefix].append(person)
 
+    name_shards: dict[str, list[dict]] = defaultdict(list)
+    for person in people.values():
+        prefixes = sorted({item["number"].zfill(5)[:2] for item in person["candidacies"]})
+        for alias in sorted(set(person["normalizedNames"])):
+            name_shards[name_shard(alias)].append({
+                "normalizedName": alias,
+                "id": person["id"],
+                "name": person["name"],
+                "numberPrefixes": prefixes,
+            })
+
     temporary = OUTPUT_DIR.with_name(OUTPUT_DIR.name + ".tmp")
     if temporary.exists():
         shutil.rmtree(temporary)
     (temporary / "number").mkdir(parents=True)
+    (temporary / "name").mkdir(parents=True)
     for prefix, entries in sorted(shards.items()):
         entries.sort(key=lambda item: (item["name"], item["id"]))
         (temporary / "number" / f"{prefix}.json").write_text(
-            json.dumps({"schemaVersion": 1, "candidates": entries}, ensure_ascii=False, separators=(",", ":")),
+            json.dumps({"schemaVersion": 2, "candidates": entries}, ensure_ascii=False, separators=(",", ":")),
             encoding="utf-8",
         )
+    for prefix, entries in sorted(name_shards.items()):
+        entries.sort(key=lambda item: (item["normalizedName"], item["id"]))
+        (temporary / "name" / f"{prefix}.json").write_text(
+            json.dumps({"schemaVersion": 2, "entries": entries}, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+    coverage = {
+        str(year): {office.title(): office_counts[(year, office)] for office in sorted(ALLOWED_OFFICES)}
+        for year in YEARS
+    }
     manifest = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "source": "Tribunal Superior Eleitoral - Dados Abertos",
+        "scope": {"country": "BR", "state": "SP"},
         "generatedYears": list(YEARS),
+        "offices": sorted(ALLOWED_OFFICES),
         "candidateCount": len(people),
         "candidacyCount": sum(year_counts.values()),
         "candidaciesByYear": {str(year): year_counts[year] for year in YEARS},
+        "candidaciesByYearAndOffice": coverage,
         "shards": sorted(shards),
+        "nameShards": sorted(name_shards),
+        "identityRule": "normalized legal name plus birth date; exact legal and ballot names are searchable",
     }
     (temporary / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     backup = OUTPUT_DIR.with_name(OUTPUT_DIR.name + ".previous")
@@ -209,10 +245,10 @@ def build() -> None:
 
 def compress_existing_catalog() -> None:
     """Create static gzip shards from the verified full-history candidate catalog."""
-    for source in sorted((OUTPUT_DIR / "number").glob("*.json")):
+    sources = list((OUTPUT_DIR / "number").glob("*.json")) + list((OUTPUT_DIR / "name").glob("*.json"))
+    for source in sorted(sources):
         target = source.with_suffix(source.suffix + ".gz")
         with source.open("rb") as input_stream, target.open("wb") as output_stream:
-            import gzip
             with gzip.GzipFile(filename="", mode="wb", fileobj=output_stream, compresslevel=9, mtime=0) as compressed:
                 shutil.copyfileobj(input_stream, compressed, length=1024 * 1024)
         print(f"{source.name}: {target.stat().st_size} bytes")
@@ -238,12 +274,80 @@ def enrich_existing_catalog() -> None:
     compress_existing_catalog()
 
 
+def reindex_existing_catalog() -> None:
+    """Add the exact-name index and auditable coverage metadata without rereading vote archives."""
+    people: dict[str, dict] = {}
+    for source in sorted((OUTPUT_DIR / "number").glob("*.json")):
+        payload = json.loads(source.read_text(encoding="utf-8"))
+        for person in payload["candidates"]:
+            people.setdefault(person["id"], person)
+
+    target_dir = OUTPUT_DIR / "name"
+    temporary_dir = OUTPUT_DIR / "name.tmp"
+    if temporary_dir.exists():
+        shutil.rmtree(temporary_dir)
+    temporary_dir.mkdir(parents=True)
+    index: dict[str, list[dict]] = defaultdict(list)
+    for person in people.values():
+        prefixes = sorted({item["number"].zfill(5)[:2] for item in person["candidacies"]})
+        for alias in sorted(set(person["normalizedNames"])):
+            index[name_shard(alias)].append({
+                "normalizedName": alias,
+                "id": person["id"],
+                "name": person["name"],
+                "numberPrefixes": prefixes,
+            })
+    for prefix, entries in sorted(index.items()):
+        entries.sort(key=lambda item: (item["normalizedName"], item["id"]))
+        source = temporary_dir / f"{prefix}.json"
+        source.write_text(
+            json.dumps({"schemaVersion": 2, "entries": entries}, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        with source.open("rb") as input_stream, source.with_suffix(".json.gz").open("wb") as output_stream:
+            with gzip.GzipFile(filename="", mode="wb", fileobj=output_stream, compresslevel=9, mtime=0) as compressed:
+                shutil.copyfileobj(input_stream, compressed, length=1024 * 1024)
+    if target_dir.exists():
+        shutil.rmtree(target_dir)
+    try:
+        os.replace(temporary_dir, target_dir)
+    except OSError:
+        shutil.copytree(temporary_dir, target_dir)
+        shutil.rmtree(temporary_dir)
+
+    manifest_path = OUTPUT_DIR / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    coverage: dict[str, dict[str, int]] = {str(year): {office.title(): 0 for office in sorted(ALLOWED_OFFICES)} for year in YEARS}
+    seen_candidacies: set[tuple[str, int, str]] = set()
+    for person in people.values():
+        for candidacy in person["candidacies"]:
+            key = (person["id"], int(candidacy["year"]), str(candidacy["sequence"]))
+            if key in seen_candidacies:
+                continue
+            seen_candidacies.add(key)
+            coverage[str(candidacy["year"])][normalized(candidacy["office"]).title()] += 1
+    manifest.update({
+        "schemaVersion": 2,
+        "scope": {"country": "BR", "state": "SP"},
+        "offices": sorted(ALLOWED_OFFICES),
+        "candidaciesByYearAndOffice": coverage,
+        "nameShards": sorted(index),
+        "identityRule": "normalized legal name plus birth date; exact legal and ballot names are searchable",
+    })
+    temporary_manifest = manifest_path.with_suffix(".json.tmp")
+    temporary_manifest.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(temporary_manifest, manifest_path)
+    print(json.dumps({"candidateCount": len(people), "candidacyCount": len(seen_candidacies), "nameShards": len(index)}, ensure_ascii=False))
+
+
 if __name__ == "__main__":
     import sys
     if "--compress-existing" in sys.argv:
         compress_existing_catalog()
     elif "--enrich-existing" in sys.argv:
         enrich_existing_catalog()
+    elif "--reindex-existing" in sys.argv:
+        reindex_existing_catalog()
     else:
         build()
         compress_existing_catalog()
