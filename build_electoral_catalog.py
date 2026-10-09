@@ -86,6 +86,28 @@ def load_votes(valid_keys: set[str]) -> tuple[dict[str, dict[str, int]], dict[st
     return by_zone, totals
 
 
+def assign_competitive_metrics(candidacy_refs: list[tuple[str, dict, str]], people: dict[str, dict]) -> None:
+    groups: dict[tuple[int, str, str], list[tuple[dict, str]]] = defaultdict(list)
+    for person_id_value, candidacy, _ in candidacy_refs:
+        office = normalized(candidacy["office"])
+        territory = normalized(candidacy["municipality"]) if office == "VEREADOR" else "SP"
+        groups[(candidacy["year"], office, territory)].append((candidacy, person_id_value))
+    for entries in groups.values():
+        total_nominal_votes = sum(candidacy["votes"] for candidacy, _ in entries)
+        leader_votes = max((candidacy["votes"] for candidacy, _ in entries), default=0)
+        leader_id = next((person_id_value for candidacy, person_id_value in entries if candidacy["votes"] == leader_votes), "")
+        leader_name = people.get(leader_id, {}).get("name", "")
+        candidate_count = len(entries)
+        for candidacy, _ in entries:
+            candidacy["rank"] = 1 + sum(other["votes"] > candidacy["votes"] for other, _ in entries)
+            candidacy["candidateCount"] = candidate_count
+            candidacy["nominalVotes"] = total_nominal_votes
+            candidacy["voteSharePct"] = round(100 * candidacy["votes"] / total_nominal_votes, 4) if total_nominal_votes else 0
+            candidacy["leaderName"] = leader_name
+            candidacy["leaderVotes"] = leader_votes
+            candidacy["gapToLeaderVotes"] = leader_votes - candidacy["votes"]
+
+
 def build() -> None:
     people: dict[str, dict] = {}
     valid_keys: set[str] = set()
@@ -128,6 +150,7 @@ def build() -> None:
             {"municipality": territory.rsplit("|", 1)[0], "zone": territory.rsplit("|", 1)[1], "votes": votes}
             for territory, votes in sorted(by_zone.get(key, {}).items())
         ]
+    assign_competitive_metrics(candidacy_refs, people)
 
     for person in people.values():
         person["normalizedNames"] = sorted(person["normalizedNames"])
@@ -195,10 +218,32 @@ def compress_existing_catalog() -> None:
         print(f"{source.name}: {target.stat().st_size} bytes")
 
 
+def enrich_existing_catalog() -> None:
+    people: dict[str, dict] = {}
+    for source in sorted((OUTPUT_DIR / "number").glob("*.json")):
+        payload = json.loads(source.read_text(encoding="utf-8"))
+        for person in payload["candidates"]:
+            people.setdefault(person["id"], person)
+    refs = [(person["id"], candidacy, "") for person in people.values() for candidacy in person["candidacies"]]
+    assign_competitive_metrics(refs, people)
+    prefixes: dict[str, list[dict]] = defaultdict(list)
+    for person in people.values():
+        for prefix in {item["number"].zfill(5)[:2] for item in person["candidacies"]}:
+            prefixes[prefix].append(person)
+    for prefix, entries in sorted(prefixes.items()):
+        target = OUTPUT_DIR / "number" / f"{prefix}.json"
+        temporary = target.with_suffix(".json.tmp")
+        temporary.write_text(json.dumps({"schemaVersion": 1, "candidates": entries}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        os.replace(temporary, target)
+    compress_existing_catalog()
+
+
 if __name__ == "__main__":
     import sys
     if "--compress-existing" in sys.argv:
         compress_existing_catalog()
+    elif "--enrich-existing" in sys.argv:
+        enrich_existing_catalog()
     else:
         build()
         compress_existing_catalog()
