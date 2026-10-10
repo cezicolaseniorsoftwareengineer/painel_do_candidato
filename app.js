@@ -39,6 +39,7 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
 (function addCandidateAccessAndUpload(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const db=window.ELECTION_DATA;
+  if(!db.candidates||typeof db.candidates!=='object')db.candidates={};
   const overlay=document.createElement('div');
   overlay.className='access-gate';
   overlay.innerHTML='<div class="access-card"><label class="access-field">Nome do candidato<input id="candidateName" type="text" autocomplete="name" autofocus></label><label class="access-field">Número do candidato <small>(opcional com nome completo)</small><input id="candidateNumber" type="text" inputmode="numeric" autocomplete="off" maxlength="5"></label><button id="accessSubmit" class="access-submit" type="button">Entrar no painel</button><div id="candidateChoices" role="listbox" aria-label="Candidaturas encontradas"></div><p id="accessMessage" class="access-message" role="alert"></p></div>';
