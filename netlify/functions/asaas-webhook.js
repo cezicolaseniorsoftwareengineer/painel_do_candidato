@@ -15,7 +15,7 @@ export const handler = async (event) => {
   const payment = payload.payment || {};
   const payloadHash = crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
   const inserted = await sql`INSERT INTO asaas_webhook_events(event_id, event_name, payment_id, payload_hash) VALUES (${payload.id}, ${payload.event}, ${payment.id || null}, ${payloadHash}) ON CONFLICT (event_id) DO NOTHING RETURNING event_id`;
-  if (!inserted.rows?.length) return json(200, { ok: true, duplicate: true });
+  if (!inserted?.length) return json(200, { ok: true, duplicate: true });
   if (['PAYMENT_CONFIRMED', 'PAYMENT_RECEIVED'].includes(payload.event) && payment.externalReference) {
     await sql`INSERT INTO access_grants(user_id, grant_type, starts_at, expires_at, asaas_customer_id, asaas_payment_id)
       SELECT ${payment.externalReference}::uuid, 'paid', NOW(), NOW() + INTERVAL '365 days', ${payment.customer || null}, ${payment.id || null}

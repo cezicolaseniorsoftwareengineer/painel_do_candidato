@@ -51,7 +51,7 @@ export async function currentUser(event) {
     FROM auth_sessions s JOIN app_users u ON u.id = s.user_id
     WHERE s.token_hash = ${hashToken(token)} AND s.revoked_at IS NULL AND s.expires_at > NOW()
     LIMIT 1`;
-  const user = result.rows?.[0];
+  const user = result?.[0];
   if (user && !user.disabled_at) {
     user.accessExpiresAt = user.access_expires_at;
     delete user.access_expires_at;

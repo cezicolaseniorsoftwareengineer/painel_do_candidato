@@ -10,13 +10,13 @@ export const handler = async (event) => {
   if (name.length < 2 || !/^\S+@\S+\.\S+$/.test(email) || input.password.length < 10) return json(400, { error: 'invalid_registration' });
   const sql = db();
   const existing = await sql`SELECT id FROM app_users WHERE email = ${email} LIMIT 1`;
-  if (existing.rows?.length) return json(409, { error: 'email_already_registered' });
+  if (existing?.length) return json(409, { error: 'email_already_registered' });
   const passwordHash = await bcrypt.hash(input.password, 12);
   const user = await sql`INSERT INTO app_users(name, email, password_hash) VALUES (${name}, ${email}, ${passwordHash}) RETURNING id, name, email, role`;
-  const userId = user.rows[0].id;
+  const userId = user[0].id;
   await sql`INSERT INTO access_grants(user_id, grant_type, starts_at, expires_at) VALUES (${userId}, 'trial', NOW(), NOW() + INTERVAL '24 hours')`;
   const token = newToken();
   await sql`INSERT INTO auth_sessions(user_id, token_hash, expires_at) VALUES (${userId}, ${hashToken(token)}, NOW() + INTERVAL '30 days')`;
   requiredEnv('SESSION_SECRET');
-  return json(201, { user: user.rows[0], access: { type: 'trial', expiresAt: new Date(Date.now() + 86400000).toISOString() } }, { 'set-cookie': cookie('mv_session', token, 2592000) });
+  return json(201, { user: user[0], access: { type: 'trial', expiresAt: new Date(Date.now() + 86400000).toISOString() } }, { 'set-cookie': cookie('mv_session', token, 2592000) });
 };
