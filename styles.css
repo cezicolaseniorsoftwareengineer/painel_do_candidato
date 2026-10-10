@@ -12,6 +12,7 @@ footer{align-items:center;text-align:center}footer b,footer span{display:block;w
 .evolution-grid button{padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:center;color:inherit;cursor:pointer}.evolution-grid button:hover,.evolution-grid button:focus{border-color:var(--blue);background:#edf6ff;outline:2px solid #00539b33}
 @media(max-width:430px){aside{width:84vw}.compare-controls{grid-template-columns:1fr}.compare-controls button{width:44px;justify-self:center}.hero h2{font-size:38px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+.brand-mark{overflow:hidden;padding:0!important;background:var(--yellow)!important;box-shadow:0 6px #0002!important}.brand-mark img{display:block;width:100%;height:100%;object-fit:contain}
 .line polyline.old,.line polyline.new{fill:none}
 .filters{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
 .downloads{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.downloads a{padding:14px;border:1px solid var(--line);border-radius:10px;background:#f8fbfd;color:var(--blue);font-size:11px;font-weight:700;text-decoration:none}.downloads a:hover{border-color:var(--blue);background:#e9f2fb}

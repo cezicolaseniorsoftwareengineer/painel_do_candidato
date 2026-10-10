@@ -36,6 +36,17 @@ function comparison(){const years=candidate.years.map(String),left=candidate.zon
 function render(){const rows=visible();metrics(rows);chartType==='bar'?bars(chartItems(rows)):lines(chartItems(rows));resetChartScroll(els.chart);highlights(rows);ranking(rows);comparison()}
 els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.onchange=()=>{dependent();render()});[els.place,els.zone,els.sort,els.behavior].forEach(s=>s.onchange=render);[els.a,els.b].forEach(s=>s.onchange=comparison);$('#swapCompare').onclick=()=>{[els.a.value,els.b.value]=[els.b.value,els.a.value];comparison()};$('#resetFilters').onclick=()=>{[els.region,els.municipality,els.place,els.zone,els.behavior].forEach(s=>s.value='all');els.sort.value='current-desc';dependent();render()};document.querySelectorAll('[data-chart]').forEach(button=>{button.type='button';button.addEventListener('click',event=>{event.preventDefault();const next=button.dataset.chart;if(next!=='bar'&&next!=='line')return;chartType=next;document.querySelectorAll('[data-chart]').forEach(x=>x.classList.toggle('active',x.dataset.chart===chartType));render()})});$('#menuButton').onclick=e=>{const open=document.body.classList.toggle('menu-open');e.currentTarget.setAttribute('aria-expanded',open)};setCandidate();
 }());
+(function applyProjectBranding(){
+  if(typeof document==='undefined')return;
+  const favicon=document.createElement('link');favicon.rel='icon';favicon.type='image/png';favicon.href='logo-mapavoto.png';document.head.appendChild(favicon);
+  const brand=document.querySelector('.brand');
+  if(brand)brand.innerHTML='<b class="brand-mark" aria-hidden="true"><img src="logo-mapavoto.png" alt=""></b><span>MAPA DO VOTO<small>INTELIGÊNCIA TERRITORIAL DA POLÍTICA</small></span>';
+  const eyebrow=document.querySelector('header .eyebrow');if(eyebrow)eyebrow.textContent='INTELIGÊNCIA TERRITORIAL DA POLÍTICA';
+  const candidateSelect=document.querySelector('#candidateFilter');if(candidateSelect)candidateSelect.addEventListener('change',()=>{const sideName=document.querySelector('#sideName');if(sideName&&window.activeCandidateName)sideName.textContent=window.activeCandidateName.toUpperCase()});
+  const footer=document.querySelector('footer');if(footer)footer.innerHTML='<b>MAPA DO VOTO</b><span>Inteligência territorial da política · Dados eleitorais oficiais do TSE</span>';
+  const hero=document.querySelector('.hero');if(hero){const title=hero.querySelector('h2');if(title)title.innerHTML='Mapa do voto.<br><em>Decisões melhores.</em>';const copy=hero.querySelector('p');if(copy)copy.textContent='Inteligência territorial da política por região, município e zona eleitoral.';}
+  document.title='Mapa do Voto | Inteligência territorial da política';
+}());
 
 (function enforceTerritorialRegions(){
   if(typeof window==='undefined'||typeof document==='undefined'||!window.ELECTION_DATA)return;
