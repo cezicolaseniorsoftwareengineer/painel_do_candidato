@@ -18,7 +18,8 @@ export function newToken() {
 }
 
 export function json(statusCode, body, headers = {}) {
-  return { statusCode, headers: { 'content-type': 'application/json; charset=utf-8', ...headers }, body: JSON.stringify(body) };
+  const responseHeaders = new Headers({ 'content-type': 'application/json; charset=utf-8', ...headers });
+  return new Response(JSON.stringify(body), { status: statusCode, headers: responseHeaders });
 }
 
 export function parseJson(event) {
