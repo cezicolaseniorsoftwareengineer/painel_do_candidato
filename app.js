@@ -58,6 +58,14 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   select?.addEventListener('change',unlock);
 }());
 
+(function reapplyTerritorialRegionsAfterCandidateLoad(){
+  if(typeof document==='undefined')return;
+  const select=document.querySelector('#regionFilter');if(!select)return;
+  const allowed=['Norte','Sul','Leste','Oeste','Centro','Litoral','Interior'];
+  const apply=()=>{if([...select.options].some(option=>option.textContent==='Não classificada')){const current=select.value;select.replaceChildren(new Option('Todas as regiões','all'),...allowed.map(region=>new Option(region,region)));select.value=allowed.includes(current)?current:'all';}};
+  const observer=new MutationObserver(apply);observer.observe(select,{childList:true});apply();
+}());
+
 (function addCatalogSearch(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const header=document.querySelector('header');if(!header||document.querySelector('#candidateSearch'))return;
