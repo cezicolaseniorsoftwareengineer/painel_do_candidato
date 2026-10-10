@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { db, json, newToken, hashToken, cookie, parseJson, requiredEnv } from './_auth.js';
 
-export default async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
   const input = parseJson(event);
   if (!input || typeof input.name !== 'string' || typeof input.email !== 'string' || typeof input.password !== 'string') return json(400, { error: 'name_email_password_required' });

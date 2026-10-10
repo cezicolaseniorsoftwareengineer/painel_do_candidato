@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { db, json, requiredEnv } from './_auth.js';
 
-export default async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
   const expected = requiredEnv('ASAAS_WEBHOOK_TOKEN');
   const received = event.headers?.['asaas-access-token'] || event.headers?.['Asaas-Access-Token'];
