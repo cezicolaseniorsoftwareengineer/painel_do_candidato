@@ -71,9 +71,10 @@ def vote_key(year: int, municipality: str, office: str, number: str) -> str:
     return "|".join((str(year), scope, normalized_office, number.lstrip("0") or "0"))
 
 
-def load_votes(valid_keys: set[str]) -> tuple[dict[str, dict[str, int]], dict[str, int]]:
+def load_votes(valid_keys: set[str]) -> tuple[dict[str, dict[str, int]], dict[str, int], dict[str, list[dict]]]:
     by_zone: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     totals: dict[str, int] = defaultdict(int)
+    by_record: dict[str, list[dict]] = defaultdict(list)
     for year, archive in sorted(bweb_archives().items()):
         with zipfile.ZipFile(archive) as zipped:
             member = next(name for name in zipped.namelist() if name.lower().endswith(".csv"))
@@ -90,7 +91,17 @@ def load_votes(valid_keys: set[str]) -> tuple[dict[str, dict[str, int]], dict[st
                     territory = f'{row["NM_MUNICIPIO"].strip().title()}|{zone}'
                     by_zone[key][territory] += votes
                     totals[key] += votes
-    return by_zone, totals
+                    if votes:
+                        by_record[key].append({
+                            "municipality": row["NM_MUNICIPIO"].strip().title(),
+                            "zone": zone,
+                            "section": str(int(row["NR_SECAO"])),
+                            "pollingPlaceNumber": str(int(row["NR_LOCAL_VOTACAO"])),
+                            "office": row["DS_CARGO_PERGUNTA"].strip().title(),
+                            "candidateNumber": row["NR_VOTAVEL"].lstrip("0") or "0",
+                            "votes": votes,
+                        })
+    return by_zone, totals, by_record
 
 
 def assign_competitive_metrics(candidacy_refs: list[tuple[str, dict, str]], people: dict[str, dict]) -> None:
@@ -152,13 +163,14 @@ def build() -> None:
         year_counts[year] += 1
         office_counts[(year, normalized(row["DS_CARGO"]))] += 1
 
-    by_zone, totals = load_votes(valid_keys)
+    by_zone, totals, by_record = load_votes(valid_keys)
     for _, candidacy, key in candidacy_refs:
         candidacy["votes"] = totals.get(key, 0)
         candidacy["zones"] = [
             {"municipality": territory.rsplit("|", 1)[0], "zone": territory.rsplit("|", 1)[1], "votes": votes}
             for territory, votes in sorted(by_zone.get(key, {}).items())
         ]
+        candidacy["records"] = by_record.get(key, [])
     assign_competitive_metrics(candidacy_refs, people)
 
     for person in people.values():
