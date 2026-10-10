@@ -36,6 +36,13 @@ function render(){const rows=visible();metrics(rows);chartType==='bar'?bars(char
 els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.onchange=()=>{dependent();render()});[els.place,els.zone,els.sort,els.behavior].forEach(s=>s.onchange=render);[els.a,els.b].forEach(s=>s.onchange=comparison);$('#swapCompare').onclick=()=>{[els.a.value,els.b.value]=[els.b.value,els.a.value];comparison()};$('#resetFilters').onclick=()=>{[els.region,els.municipality,els.place,els.zone,els.behavior].forEach(s=>s.value='all');els.sort.value='current-desc';dependent();render()};document.querySelectorAll('[data-chart]').forEach(button=>{button.type='button';button.addEventListener('click',event=>{event.preventDefault();const next=button.dataset.chart;if(next!=='bar'&&next!=='line')return;chartType=next;document.querySelectorAll('[data-chart]').forEach(x=>x.classList.toggle('active',x.dataset.chart===chartType));render()})});$('#menuButton').onclick=e=>{const open=document.body.classList.toggle('menu-open');e.currentTarget.setAttribute('aria-expanded',open)};setCandidate();
 }());
 
+(function enforceTerritorialRegions(){
+  if(typeof window==='undefined'||typeof document==='undefined'||!window.ELECTION_DATA)return;
+  const classify=value=>{const text=String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();if(text.includes('LITORAL'))return'Litoral';if(text.includes('NORTE'))return'Norte';if(text.includes('SUL'))return'Sul';if(text.includes('LESTE'))return'Leste';if(text.includes('OESTE'))return'Oeste';if(text.includes('CENTRO')||text.includes('GRANDE'))return'Centro';if(text.includes('INTERIOR'))return'Interior';return'Interior'};
+  Object.values(window.ELECTION_DATA.candidates||{}).forEach(candidate=>{(candidate.zones||[]).forEach(row=>{row.region=classify(row.region)})});
+  const select=document.querySelector('#regionFilter');if(!select)return;const current=select.value;select.replaceChildren(new Option('Todas as regiões','all'),...['Norte','Sul','Leste','Oeste','Centro','Litoral','Interior'].map(region=>new Option(region,region)));select.value=['Norte','Sul','Leste','Oeste','Centro','Litoral','Interior'].includes(current)?current:'all';select.dispatchEvent(new Event('change'));
+}());
+
 (function addCatalogSearch(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const header=document.querySelector('header');if(!header||document.querySelector('#candidateSearch'))return;
