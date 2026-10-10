@@ -1,7 +1,7 @@
 import { currentUser, db, json } from './_auth.js';
 
 export const handler = async (event) => {
-  if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
+  if ((event.httpMethod || event.method) !== 'GET') return json(405, { error: 'method_not_allowed' });
   const user = await currentUser(event);
   if (!user || user.role !== 'admin') return json(403, { error: 'admin_only' });
   const sql = db();

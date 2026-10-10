@@ -31,7 +31,7 @@ export function cookie(name, value, maxAge) {
 }
 
 export function readCookie(event, name) {
-  const raw = event.headers?.cookie || event.headers?.Cookie || '';
+  const raw = event.headers?.get ? (event.headers.get('cookie') || '') : (event.headers?.cookie || event.headers?.Cookie || '');
   const part = raw.split(';').map((item) => item.trim()).find((item) => item.startsWith(`${name}=`));
   return part ? decodeURIComponent(part.slice(name.length + 1)) : null;
 }
