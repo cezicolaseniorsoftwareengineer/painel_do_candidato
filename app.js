@@ -37,6 +37,8 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
 }());
 
 (function addCandidateAccessAndUpload(){
+  // Candidate login is intentionally disabled; the dashboard opens directly.
+  return;
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const db=window.ELECTION_DATA;
   if(!db.candidates||typeof db.candidates!=='object')db.candidates={};
