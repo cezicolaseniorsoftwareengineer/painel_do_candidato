@@ -59,6 +59,10 @@ def load_candidate(config):
         "status": row["STATUS"],
         "comparability": row["COMPARABILIDADE"],
     } for row in zone_rows]
+    for zone in zones:
+        if not zone["municipality"].strip() or not zone["place"].strip() or not zone["region"].strip():
+            raise ValueError(f"Territorial metadata missing for {zone['municipality']} ZE {zone['zone']}")
+        zone["territoryStatus"] = "historical/redistributed" if zone["municipality"] == "SAO PAULO" and zone["zone"] == 398 else "current"
 
     def convert_aggregate(row, name_field):
         return {
