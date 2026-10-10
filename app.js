@@ -45,7 +45,7 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   const eyebrow=document.querySelector('header .eyebrow');if(eyebrow)eyebrow.textContent='INTELIGÊNCIA TERRITORIAL DA POLÍTICA';
   const votePanel=document.querySelector('.vote');if(votePanel)votePanel.innerHTML='<strong id="sideNumber"></strong><small id="sideName"></small>';
   const candidateSelect=document.querySelector('#candidateFilter');if(candidateSelect)candidateSelect.addEventListener('change',()=>{const sideNumber=document.querySelector('#sideNumber'),sideName=document.querySelector('#sideName');if(sideNumber&&candidate)sideNumber.textContent=candidate.number;if(sideName&&candidate)sideName.textContent=candidate.name.toUpperCase()});
-  const footer=document.querySelector('footer');if(footer)footer.innerHTML='<b>MAPA DO VOTO</b><span>Inteligência territorial da política · Dados eleitorais oficiais do TSE</span>';
+  const footer=document.querySelector('footer');if(footer)footer.innerHTML='<b>MAPA DO VOTO</b><span>Desenvolvido por Cezi Cola Engenheiro de Software · CEO Bio Code Technology · Todos os Direitos Reservados · SISTEMA ELEITORAL O MAPA DO VOTO</span>';
   const hero=document.querySelector('.hero');if(hero){const title=hero.querySelector('h2');if(title)title.innerHTML='Mapa do voto.<br><em>Decisões melhores.</em>';const copy=hero.querySelector('p');if(copy)copy.textContent='Inteligência territorial da política por região, município e zona eleitoral.';}
   document.title='Mapa do Voto | Inteligência territorial da política';
 }());
