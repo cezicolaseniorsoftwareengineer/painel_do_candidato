@@ -1,0 +1,9 @@
+{
+  "name": "mapa-do-voto",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/database": "latest",
+    "bcryptjs": "^3.0.2"
+  }
+}

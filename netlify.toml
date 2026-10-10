@@ -11,3 +11,33 @@
   from = "/api/tse/search"
   to = "/.netlify/functions/tse-search"
   status = 200
+
+[[redirects]]
+  from = "/api/auth/register"
+  to = "/.netlify/functions/auth-register"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/login"
+  to = "/.netlify/functions/auth-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/me"
+  to = "/.netlify/functions/auth-me"
+  status = 200
+
+[[redirects]]
+  from = "/api/billing/asaas-webhook"
+  to = "/.netlify/functions/asaas-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/users"
+  to = "/.netlify/functions/admin-users"
+  status = 200
+
+[[redirects]]
+  from = "/cezi-admin"
+  to = "/cezi-admin.html"
+  status = 200
