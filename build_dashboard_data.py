@@ -90,7 +90,17 @@ def load_candidate(config):
 
 
 def build():
-    payload = {"schemaVersion": 2, "candidates": {key: load_candidate(config) for key, config in CANDIDATES.items()}}
+    candidates = {key: load_candidate(config) for key, config in CANDIDATES.items()}
+    geography = {}
+    for candidate in candidates.values():
+        for zone in candidate["zones"]:
+            geography[f"{zone['municipality']}|{zone['zone']}"] = {
+                "municipality": zone["municipality"],
+                "zone": zone["zone"],
+                "place": zone["place"],
+                "region": zone["region"],
+            }
+    payload = {"schemaVersion": 3, "geography": geography, "candidates": candidates}
     OUTPUT.write_text("window.ELECTION_DATA=" + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
     for key, candidate in payload["candidates"].items():
         print(f"{key}: rows={candidate['audit']['sourceRows']} votes={candidate['audit']['reconciledVotes']}")
