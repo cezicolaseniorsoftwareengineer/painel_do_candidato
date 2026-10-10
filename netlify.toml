@@ -41,6 +41,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/admin/control"
+  to = "/.netlify/functions/admin-control"
+  status = 200
+
+[[redirects]]
   from = "/cezi-admin"
   to = "/cezi-admin.html"
   status = 200
