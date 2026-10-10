@@ -58,9 +58,13 @@ def read_candidate_rows():
 
 def bweb_archives() -> dict[int, Path]:
     result = {}
-    for path in SOURCE_DIR.glob("bweb_1t_SP_*.zip"):
+    for path in SOURCE_DIR.glob("bweb_1t_SP_*.csv"):
         match = re.search(r"(2020|2022|2024|2026)", path.name)
         if match:
+            result[int(match.group(1))] = path
+    for path in SOURCE_DIR.glob("bweb_1t_SP_*.zip"):
+        match = re.search(r"(2020|2022|2024|2026)", path.name)
+        if match and int(match.group(1)) not in result:
             result[int(match.group(1))] = path
     return result
 
@@ -76,9 +80,13 @@ def load_votes(valid_keys: set[str]) -> tuple[dict[str, dict[str, int]], dict[st
     totals: dict[str, int] = defaultdict(int)
     by_record: dict[str, list[tuple[str, str, str, str, str, str, int]]] = defaultdict(list)
     for year, archive in sorted(bweb_archives().items()):
-        with zipfile.ZipFile(archive) as zipped:
+        if archive.suffix.lower() == ".csv":
+            raw_context = archive.open("rb")
+        else:
+            zipped = zipfile.ZipFile(archive)
             member = next(name for name in zipped.namelist() if name.lower().endswith(".csv"))
-            with zipped.open(member) as raw:
+            raw_context = zipped.open(member)
+        with raw_context as raw:
                 reader = csv.DictReader(io.TextIOWrapper(raw, encoding="latin-1", newline=""), delimiter=";")
                 for row in reader:
                     if row["CD_TIPO_VOTAVEL"] != "1":
