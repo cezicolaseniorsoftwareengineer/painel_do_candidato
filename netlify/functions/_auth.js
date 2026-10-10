@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import { getDatabase } from '@netlify/database';
+import { neon } from '@neondatabase/serverless';
 
-export const db = () => getDatabase().sql;
+export const db = () => neon(requiredEnv('DATABASE_URL'));
 
 export function requiredEnv(name) {
   const value = process.env[name];
