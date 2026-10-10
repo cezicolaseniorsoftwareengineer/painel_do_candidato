@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@netlify/database": "latest",
-    "bcryptjs": "^3.0.2"
+    "@netlify/database": "^2.0.1",
+    "bcryptjs": "^3.0.3"
   }
 }
