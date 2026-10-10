@@ -43,6 +43,12 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   const select=document.querySelector('#regionFilter');if(!select)return;const current=select.value;select.replaceChildren(new Option('Todas as regiões','all'),...['Norte','Sul','Leste','Oeste','Centro','Litoral','Interior'].map(region=>new Option(region,region)));select.value=['Norte','Sul','Leste','Oeste','Centro','Litoral','Interior'].includes(current)?current:'all';select.dispatchEvent(new Event('change'));
 }());
 
+(function keepSearchedCandidateOnly(){
+  if(typeof document==='undefined')return;
+  const select=document.querySelector('#candidateFilter');if(!select)return;
+  select.addEventListener('change',()=>{const option=select.selectedOptions[0];if(option&&option.dataset.catalog==='true')return;if(select.value!=='andre'&&select.value!=='sandra'&&option){option.dataset.catalog='true';select.replaceChildren(option);select.value=option.value}});
+}());
+
 (function addCatalogSearch(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const header=document.querySelector('header');if(!header||document.querySelector('#candidateSearch'))return;
