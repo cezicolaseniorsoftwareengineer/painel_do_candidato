@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { getDatabase } from '@netlify/database';
 
-export const db = () => getDatabase();
+export const db = () => getDatabase().sql;
 
 export function requiredEnv(name) {
   const value = process.env[name];
