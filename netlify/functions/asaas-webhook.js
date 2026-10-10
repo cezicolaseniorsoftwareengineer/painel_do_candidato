@@ -9,7 +9,7 @@ export const handler = async (event) => {
   const expectedBuffer = Buffer.from(expected);
   if (!received || receivedBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(receivedBuffer, expectedBuffer)) return json(401, { error: 'invalid_webhook_token' });
   let payload;
-  try { payload = event.body === undefined ? await event.json() : JSON.parse(event.body || '{}'); } catch { return json(400, { error: 'invalid_json' }); }
+  try { payload = typeof event.json === 'function' ? await event.json() : JSON.parse(event.body || '{}'); } catch { return json(400, { error: 'invalid_json' }); }
   if (!payload.id || !payload.event) return json(400, { error: 'invalid_event' });
   const sql = db();
   const payment = payload.payment || {};

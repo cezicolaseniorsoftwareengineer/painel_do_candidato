@@ -3,7 +3,7 @@ import { db, json, newToken, hashToken, cookie, parseJson, requiredEnv } from '.
 
 export const handler = async (event) => {
   if ((event.httpMethod || event.method) !== 'POST') return json(405, { error: 'method_not_allowed' });
-  const input = event.body === undefined ? await event.json().catch(() => null) : parseJson(event);
+  const input = typeof event.json === 'function' ? await event.json().catch(() => null) : parseJson(event);
   if (!input || typeof input.name !== 'string' || typeof input.email !== 'string' || typeof input.password !== 'string') return json(400, { error: 'name_email_password_required' });
   const name = input.name.trim().slice(0, 160);
   const email = input.email.trim().toLowerCase().slice(0, 320);

@@ -3,7 +3,7 @@ import { db, json, newToken, hashToken, cookie, parseJson } from './_auth.js';
 
 export const handler = async (event) => {
   if ((event.httpMethod || event.method) !== 'POST') return json(405, { error: 'method_not_allowed' });
-  const input = event.body === undefined ? await event.json().catch(() => null) : parseJson(event);
+  const input = typeof event.json === 'function' ? await event.json().catch(() => null) : parseJson(event);
   const email = input?.email?.trim().toLowerCase();
   if (!email || typeof input.password !== 'string') return json(400, { error: 'email_password_required' });
   const sql = db();
