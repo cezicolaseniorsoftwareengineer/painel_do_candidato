@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { getDatabase } from '@netlify/database/dist/main.js';
+import { getDatabase } from '@netlify/database';
 
 export const db = () => getDatabase();
 
