@@ -66,6 +66,14 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   const observer=new MutationObserver(apply);observer.observe(select,{childList:true});apply();
 }());
 
+(function classifyLoadedCandidateZones(){
+  if(typeof window==='undefined'||typeof document==='undefined')return;
+  const select=document.querySelector('#candidateFilter');
+  const normalize=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim();
+  const apply=()=>{const candidates=window.ELECTION_DATA?.candidates||{},known=new Map();Object.values(candidates).forEach(candidate=>(candidate.zones||[]).forEach(row=>{if(row.region&&row.region!=='Não classificada')known.set(`${normalize(row.municipality)}|${row.zone}`,row.region)}));let changed=false;Object.values(candidates).forEach(candidate=>(candidate.zones||[]).forEach(row=>{if(row.region==='Não classificada'){row.region=known.get(`${normalize(row.municipality)}|${row.zone}`)||'Interior';changed=true}}));if(changed&&select&&select.value)select.dispatchEvent(new Event('change'))};
+  apply();setInterval(apply,500);
+}());
+
 (function addCatalogSearch(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const header=document.querySelector('header');if(!header||document.querySelector('#candidateSearch'))return;
