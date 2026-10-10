@@ -49,6 +49,15 @@ els.candidate.onchange=setCandidate;[els.region,els.municipality].forEach(s=>s.o
   select.addEventListener('change',()=>{const option=select.selectedOptions[0];if(option){option.dataset.catalog='true';select.replaceChildren(option);select.value=option.value}});
 }());
 
+(function requireCandidateSearchBeforeDashboard(){
+  if(typeof document==='undefined')return;
+  document.body.classList.add('awaiting-candidate');
+  const select=document.querySelector('#candidateFilter');if(select)select.replaceChildren(new Option('Busque um candidato',''));
+  const search=document.querySelector('#candidateSearch');const results=document.querySelector('#candidateSearchResults');
+  const unlock=()=>{if(select?.value){document.body.classList.remove('awaiting-candidate');if(results)results.setAttribute('aria-label','Candidato selecionado')}};
+  select?.addEventListener('change',unlock);
+}());
+
 (function addCatalogSearch(){
   if(typeof document==='undefined'||!window.ELECTION_DATA)return;
   const header=document.querySelector('header');if(!header||document.querySelector('#candidateSearch'))return;
